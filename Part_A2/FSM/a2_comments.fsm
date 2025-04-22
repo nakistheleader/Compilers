@@ -1,0 +1,9 @@
+START=S0
+S0:
+    ; -> S1
+    \n -> BAD
+    * -> S0
+S1:
+    * -> S1
+    \n -> GOOD
+GOOD(OK): \n -> GOOD
