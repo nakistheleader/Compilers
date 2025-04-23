@@ -1,0 +1,20 @@
+START=S0
+S0:
+    " -> S1
+    //\n -> BIN
+    * -> BIN //S0
+S1:
+    " -> GOOD
+    \\ -> S2
+    * -> S1
+    \n -> BIN
+S2:
+    \\ " n -> S1
+    * -> BIN
+BIN:
+    \n -> BAD
+    * -> BIN
+GOOD(OK):
+    \n -> GOOD
+    EOF -> GOOD
+    * -> BIN
