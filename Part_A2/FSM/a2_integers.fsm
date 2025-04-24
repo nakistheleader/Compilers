@@ -1,0 +1,19 @@
+S0:
++    -> S1  
+-    -> S1  
+0    -> S2  
+1-9  -> S3  
+\n   -> BAD  
+*    -> BAD  
+S1:
+1-9  -> S3  
+\n   -> BAD  
+*    -> BAD  
+S2:
+\n   -> GOOD  
+*    -> BAD  
+S3:
+0-9  -> S3  
+\n   -> GOOD  
+*    -> BAD  
+GOOD (OK):
