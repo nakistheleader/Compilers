@@ -12,7 +12,7 @@ S2:
     \\ " n -> S1
     * -> BIN
 BIN:
-    \n -> BAD
+    EOF -> BAD
     * -> BIN
 GOOD(OK):
     \n -> GOOD
