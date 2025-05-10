@@ -1,8 +1,7 @@
 START=S0
 S0:
     " -> S1
-    //\n -> BIN
-    * -> BIN //S0
+    * -> BIN
 S1:
     " -> GOOD
     \\ -> S2
