@@ -1,9 +1,13 @@
 START=S0
 S0:
     ; -> S1
-    \n -> BAD
-    * -> S0
+    * -> SB
 S1:
     * -> S1
-    \n -> GOOD
-GOOD(OK): \n -> GOOD
+    \n, EOF -> GOOD
+SB:
+    * -> SB
+    EOF -> BAD
+GOOD(OK): 
+    \n, EOF -> GOOD
+    * -> SB
