@@ -1,13 +1,13 @@
 START=S0
 S0:
     ; -> S1
-    * -> SB
+    * -> BIN
 S1:
     * -> S1
     \n, EOF -> GOOD
-SB:
-    * -> SB
+BIN:
+    * -> BIN
     EOF -> BAD
 GOOD(OK): 
     \n, EOF -> GOOD
-    * -> SB
+    * -> BIN
