@@ -1,80 +1,99 @@
 START=S0
 S0:
     ; -> COMMENTS
-    - + 0-9 -> INT_FLOAT
-    \s \t \n ( ) EOF -> S0
+    +    -> NUM_S1  
+    -    -> NUM_S1  
+    0    -> NUM_S2  
+    1-9  -> NUM_S3  
+    \s \t -> S0
+    \n ( ) EOF -> GOOD
     " -> STRINGS
-    ; VARIABLES
-    ; Ονόματα ορισμών και στοιχείων γεγονόντων
-    * -> BAD
+    ? -> VAR
+    [A-Z a-z] -> NAMES_S1
+    * -> BIN
+
+STRINGS:
+    " -> STRINGS_S1
+    \\ -> STRINGS_S1
+    * -> STRINGS
+    \n -> BIN
+STRINGS_S1:
+    \\ " n -> STRINGS
+    \n   -> GOOD
+    * -> BIN
+
 
 COMMENTS:
     * -> COMMENTS
     \n, EOF -> GOOD
-GOOD(OK): 
-    EOF -> GOOD
+
+NUM_S1:
+    0    -> ZERO
+    1-9  -> NUM_S3  
+    \n   -> BIN
+    *    -> BIN
+
+ZERO:
+    \n   -> BIN
+    .    -> NUM_S4
+    e E  -> NUM_S4
+
+NUM_S2:
+    .    -> NUM_S4
+    e E  -> NUM_S4
+    \n   -> GOOD  
+    *    -> BIN
+NUM_S3:
+    0-9  -> NUM_S3  
+    .    -> NUM_S4
+    e E  -> NUM_S4
+    \n   -> GOOD  
+    *    -> BIN
+NUM_S4: 	
+	0-9 -> NUM_S5
+	* -> BIN
+	
+NUM_S5: 	
+	0-9 -> NUM_S5
+	\n -> GOOD
+	e E -> NUM_S6
+	* -> BIN
+	
+NUM_S6: 	
+	0-9 -> NUM_S8
+	- + -> NUM_S7
+    \n  -> GOOD
+	* -> BIN
+	
+NUM_S7: 	
+	0-9 -> NUM_S8
+	* -> BIN
+
+NUM_S8: 	
+	0-9 -> NUM_S8
+	* -> BIN
+	\n -> GOOD
+
+
+VAR:
+    [A-Z a-z 0-9]-> VAR
+    \n, EOF -> GOOD
     * -> BIN
 
-INT_FLOAT:
-    . -> FLOAT
-    EOF -> BIN
-    1-9
-    \n -> GOOD
-
-INT:
-S0:
-    +    -> S1  
-    -    -> S1  
-    0    -> S2  
-    1-9  -> S3  
-    \n   -> SB
-    *    -> SB 
-S1:
-    1-9  -> S3  
-    \n   -> SB 
-    *    -> SB 
-S2:
-    \n   -> GOOD  
-    *    -> SB 
-S3:
-    0-9  -> S3  
-    \n   -> GOOD  
-    *    -> SB 
-GOOD (OK):
-
-FLOAT:
-S0:
-	- + -> S1
-	0-9 -> S2
-	* -> BIN
-S1:
-	0-9 -> S2
-	* -> BIN
-S2:
-	0-9 -> S2
-	. -> S4
-	e E -> S5
-	* -> BIN
-S4:
-	0-9 -> S4
-	\n -> GOOD
-	e E -> S5
-	* -> BIN
-S5:
-	0-9 -> S7
-	- + -> S6
-	* -> BIN
-S6:
-	0-9 -> S7
-	* -> BIN
-S7:
-	0-9 -> S7
-	* -> BIN
-	\n -> GOOD
-GOOD(OK): 
-	EOF -> GOOD
-	* -> BIN
+NAMES_S1:
+    [A-Z a-z 0-9]-> NAMES_S1
+    - _ -> NAMES_S2
+    \n, EOF -> GOOD
+    * -> BIN
+NAMES_S2:
+    [A-Z a-z 0-9] -> NAMES_S1
+    - _ -> NAMES_S2
+    * -> BIN
 
 BIN:
     * -> BIN
     EOF -> BAD
+
+GOOD(OK): 
+    EOF -> GOOD
+    * -> BIN
