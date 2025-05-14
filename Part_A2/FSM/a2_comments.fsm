@@ -9,5 +9,5 @@ BIN:
     * -> BIN
     EOF -> BAD
 GOOD(OK): 
-    \n, EOF -> GOOD
+    EOF -> GOOD
     * -> BIN
