@@ -1,17 +1,16 @@
 START:
-	\s	-> SPACE
-	\t	-> SPACE
+	\s	-> START
+	\t	-> START
 	\n	-> GOOD
 	(	-> GOOD
 	)	-> GOOD
 	EOF	-> GOOD
-	*	-> BAD
-
-SPACE:
-	\s	-> SPACE
-	\t	-> SPACE
-	\n	-> GOOD
-	EOF	-> GOOD
-	*	-> BAD
+	*	-> SB
+SB:
+	*	-> SB
+	EOF     -> BAD
 
 GOOD(OK):
+	EOF -> GOOD
+	*	-> SB
+	
