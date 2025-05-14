@@ -1,0 +1,48 @@
+START=S0
+
+S0: 	
+	- + -> S1
+	0-9 -> S2
+	* -> BIN
+	
+S1: 	
+	0-9 -> S2
+	* -> BIN
+	
+S2: 	
+	0-9 -> S2
+	. -> S3
+	e E -> S5
+	* -> BIN
+	
+S3: 	
+	0-9 -> S4
+	* -> BIN
+	
+S4: 	
+	0-9 -> S4
+	\n -> GOOD
+	e E -> S5
+	* -> BIN
+	
+S5: 	
+	0-9 -> S7
+	- + -> S6
+	* -> BIN
+	
+S6: 	
+	0-9 -> S7
+	* -> BIN
+
+S7: 	
+	0-9 -> S7
+	* -> BIN
+	\n -> GOOD
+	
+BIN: 	
+	*-> BIN
+	EOF -> BAD
+
+GOOD(OK): 
+	EOF -> GOOD
+	* -> BIN
