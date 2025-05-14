@@ -1,0 +1,14 @@
+START=S0
+S0:
+    ? -> S1
+    * -> BIN
+S1:
+    [A-Z a-z 0-9]-> S1
+    \n, EOF -> GOOD
+    * -> BIN
+BIN:
+    * -> BIN
+    EOF -> BAD
+GOOD(OK): 
+    EOF -> GOOD
+    * -> BIN
