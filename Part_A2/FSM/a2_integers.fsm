@@ -3,17 +3,20 @@ S0:
 -    -> S1  
 0    -> S2  
 1-9  -> S3  
-\n   -> BAD  
-*    -> BAD  
+\n   -> SB
+*    -> SB 
 S1:
 1-9  -> S3  
-\n   -> BAD  
-*    -> BAD  
+\n   -> SB 
+*    -> SB 
 S2:
 \n   -> GOOD  
-*    -> BAD  
+*    -> SB 
 S3:
 0-9  -> S3  
 \n   -> GOOD  
-*    -> BAD  
+*    -> SB 
+SB:
+EOF  -> BAD
+*    -> SB
 GOOD (OK):
