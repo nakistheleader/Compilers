@@ -1,0 +1,80 @@
+START=S0
+S0:
+    ; -> COMMENTS
+    - + 0-9 -> INT_FLOAT
+    \s \t \n ( ) EOF -> S0
+    " -> STRINGS
+    ; VARIABLES
+    ; Ονόματα ορισμών και στοιχείων γεγονόντων
+    * -> BAD
+
+COMMENTS:
+    * -> COMMENTS
+    \n, EOF -> GOOD
+GOOD(OK): 
+    EOF -> GOOD
+    * -> BIN
+
+INT_FLOAT:
+    . -> FLOAT
+    EOF -> BIN
+    1-9
+    \n -> GOOD
+
+INT:
+S0:
+    +    -> S1  
+    -    -> S1  
+    0    -> S2  
+    1-9  -> S3  
+    \n   -> SB
+    *    -> SB 
+S1:
+    1-9  -> S3  
+    \n   -> SB 
+    *    -> SB 
+S2:
+    \n   -> GOOD  
+    *    -> SB 
+S3:
+    0-9  -> S3  
+    \n   -> GOOD  
+    *    -> SB 
+GOOD (OK):
+
+FLOAT:
+S0:
+	- + -> S1
+	0-9 -> S2
+	* -> BIN
+S1:
+	0-9 -> S2
+	* -> BIN
+S2:
+	0-9 -> S2
+	. -> S4
+	e E -> S5
+	* -> BIN
+S4:
+	0-9 -> S4
+	\n -> GOOD
+	e E -> S5
+	* -> BIN
+S5:
+	0-9 -> S7
+	- + -> S6
+	* -> BIN
+S6:
+	0-9 -> S7
+	* -> BIN
+S7:
+	0-9 -> S7
+	* -> BIN
+	\n -> GOOD
+GOOD(OK): 
+	EOF -> GOOD
+	* -> BIN
+
+BIN:
+    * -> BIN
+    EOF -> BAD
