@@ -3,17 +3,19 @@ S0:
     " -> S1
     * -> BIN
 S1:
-    " -> GOOD
+    " -> S3
     \\ -> S2
     * -> S1
     \n -> BIN
 S2:
     \\ " n -> S1
     * -> BIN
+S3:
+    \n -> GOOD
+    * -> BIN
 BIN:
     EOF -> BAD
     * -> BIN
 GOOD(OK):
-    \n -> GOOD
     EOF -> GOOD
     * -> BIN
