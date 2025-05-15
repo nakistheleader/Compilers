@@ -36,6 +36,7 @@ ZERO:
     \n   -> BIN
     .    -> NUM_S4
     e E  -> NUM_S4
+    *    -> BIN
 
 NUM_S2:
     .    -> NUM_S4
