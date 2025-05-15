@@ -1,8 +1,7 @@
 START=S0
 S0:
     ; -> COMMENTS
-    +    -> NUM_S1  
-    -    -> NUM_S1  
+    + -  -> NUM_S1 
     0    -> NUM_S2  
     1-9  -> NUM_S3  
     \s \t -> S0
