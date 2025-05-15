@@ -1,9 +1,9 @@
 START=S0
 S0:
     ; -> COMMENTS
-    + -  -> NUM_S1 
+    - +  -> NUM_S1 
     0    -> NUM_S2  
-    1-9  -> NUM_S3  
+    1-9  -> NUM_S3
     \s \t -> S0
     \n ( ) EOF -> GOOD
     " -> STRINGS
@@ -13,14 +13,15 @@ S0:
 
 STRINGS:
     " -> STRINGS_S1
-    \\ -> STRINGS_S1
+    \\ -> STRINGS_S2
     * -> STRINGS
     \n -> BIN
 STRINGS_S1:
-    \\ " n -> STRINGS
-    \n   -> GOOD
+    \n -> GOOD
     * -> BIN
-
+STRINGS_S2:
+    \\ " n -> STRINGS
+    * -> BIN
 
 COMMENTS:
     * -> COMMENTS
@@ -28,35 +29,33 @@ COMMENTS:
 
 NUM_S1:
     0    -> ZERO
-    1-9  -> NUM_S3  
-    \n   -> BIN
+    1-9  -> NUM_S3
     *    -> BIN
 
 ZERO:
-    \n   -> BIN
     .    -> NUM_S4
-    e E  -> NUM_S4
+    e E  -> ===================
     *    -> BIN
 
 NUM_S2:
     .    -> NUM_S4
-    e E  -> NUM_S4
+    e E  -> ===================
     \n   -> GOOD  
     *    -> BIN
 NUM_S3:
     0-9  -> NUM_S3  
     .    -> NUM_S4
-    e E  -> NUM_S4
+    e E  -> ===================
     \n   -> GOOD  
     *    -> BIN
 NUM_S4: 	
-	0-9 -> NUM_S5
+	0-9  -> NUM_S5
 	* -> BIN
 	
 NUM_S5: 	
 	0-9 -> NUM_S5
 	\n -> GOOD
-	e E -> NUM_S6
+	e E -> ===================
 	* -> BIN
 	
 NUM_S6: 	
@@ -71,9 +70,8 @@ NUM_S7:
 
 NUM_S8: 	
 	0-9 -> NUM_S8
-	* -> BIN
 	\n -> GOOD
-
+    * -> BIN
 
 VAR:
     [A-Z a-z 0-9]-> VAR
