@@ -1,0 +1,118 @@
+START=S0
+S0:
+    ; -> COMMENTS	// Οι κανόνες comments επεξεργάζονται τις εισοδους σχολίων
+    " -> STRINGS	// Οι κανόνες strings επεξεργάζονται τις εισοδους συμβολοσειρών
+    - +  -> NUM_S1	// Οι κανόνες num_s1 επεξεργάζονται τις εισοδους προσημασμένων αριθμών
+    0    -> NUM_S2  // Οι κανόνες num_s2 επεξεργάζονται την είσοδο 0 
+    1-9  -> NUM_S3  // Οι κανόνες num_s3 επεξεργάζονται τις εισοδους αριθμών 1-9
+    \s \t -> S0 // Διαχωριστές όπου μπορούμε να έχουμε πολλαπλά space/tabs στο input
+    ( )       -> PARENTHESIS // Παρενθέσεις (διαχωριστές)
+    \n EOF    -> GOOD // Το τέλος γραμμής (end of line) και το τέλος αρχείου (eof)
+    ?         -> VAR // Οι κανόνες var επεξεργάζονται τις εισοδους μεταβλητών
+    [A-Z a-z] -> NAMES_S1  // Οι κανόνες names_s1 επεξεργάζονται τις εισοδους ονομάτων
+    * -> BIN // Λανθασμένη είσοδος
+
+STRINGS:
+    "      -> STRINGS_S1
+    \\     -> STRINGS_S2
+    *      -> STRINGS
+    \n     -> BIN
+STRINGS_S1:
+    \n     -> GOOD
+    *      -> BIN
+STRINGS_S2:
+    \\ " n -> STRINGS
+    *      -> BIN
+
+COMMENTS:
+    *       -> COMMENTS
+    \n EOF -> GOOD
+
+NUM_S1:
+    0    -> ZERO
+    1-9  -> NUM_S3
+    *    -> BIN
+
+ZERO: // Αν έχουμε υποδιαστολή προχωράμε στα float, εναλλακτικά αν έχουμε E προχωράμε στους integers, εναλλακτικά με οτιδήποτε άλλο έχουμε λανθασμενη είσοδο.
+    .    -> NUM_S4
+    e E  -> NUM_INT
+    *    -> BIN
+
+NUM_S2:
+    .    -> NUM_S4
+    e E  -> NUM_INT
+    \n   -> GOOD  
+    *    -> BIN
+NUM_S3:
+    0-9  -> NUM_S3  
+    .    -> NUM_S4
+    e E  -> NUM_INT
+    \n   -> GOOD  
+    *    -> BIN
+
+NUM_S4: 	
+	0-9  -> NUM_S5
+	*    -> BIN
+	
+NUM_S5: 	
+	0-9  -> NUM_S5
+	\n   -> GOOD
+	e E  -> NUM_FLOAT
+	*    -> BIN
+
+NUM_INT:
+    - +  -> NUM_INT2
+    0-9  -> NUM_INT3
+    *    -> BIN
+
+NUM_INT2:
+    0-9  -> NUM_INT3
+    *    -> BIN
+
+NUM_INT3:
+    0-9  -> NUM_INT3
+    \n   -> GOOD
+	*    -> BIN
+
+NUM_FLOAT:
+    - +  -> NUM_FLOAT3
+    0-9  -> NUM_FLOAT2
+    *    -> BIN
+
+NUM_FLOAT2:
+	0-9  -> NUM_FLOAT2
+    \n   -> GOOD
+	*    -> BIN
+
+NUM_FLOAT3:
+    0-9  -> NUM_FLOAT2
+	*    -> BIN
+
+PARENTHESIS:
+    \n EOF -> GOOD
+    *      -> BIN
+
+VAR:
+    [A-Z a-z 0-9] -> VAR_S1
+    *             -> BIN
+VAR_S1:
+    [A-Z a-z 0-9] -> VAR_S1
+    \n EOF       -> GOOD
+    *             -> BIN
+NAMES_S1:
+    [A-Z a-z 0-9] -> NAMES_S1
+    - _           -> NAMES_S2
+    \n EOF       -> GOOD
+    *             -> BIN
+NAMES_S2:
+    [A-Z a-z 0-9] -> NAMES_S1
+    - _           -> NAMES_S2
+    *             -> BIN
+
+BIN:
+    *     -> BIN
+    EOF   -> BAD
+
+GOOD(OK): 
+    EOF   -> GOOD
+    *     -> BIN

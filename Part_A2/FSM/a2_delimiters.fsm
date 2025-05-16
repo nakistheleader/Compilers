@@ -1,0 +1,24 @@
+// Αυτό το FSM αναγνωρίζει διαχωριστές, αν η είσοδος περιέχει μόνο διαχωριστικά, χωρίς άλλους χαρακτήρες, 
+// και αποδέχεται :
+// \s(space), \t(tab) ένα ή περισσότερα spaces, tabs
+// \n (newline) (ένα!) -> GOOD(OK)
+// ( ) (παρενθέσεις) (μία εφόσον λειτουργεί ως delimiter) -> GOOD(OK)
+// EOF (end of file) -> GOOD(OK)
+// ΟΤΙΔΗΠΟΤΕ ΑΛΛΟ -> SB -> BAD
+
+START:
+	\s	-> START
+	\t	-> START
+	\n	-> GOOD
+	(	-> GOOD
+	)	-> GOOD
+	EOF	-> GOOD
+	*	-> SB
+SB:
+	*	-> SB
+	EOF     -> BAD
+
+GOOD(OK):
+	EOF -> GOOD
+	*	-> SB
+	
