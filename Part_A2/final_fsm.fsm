@@ -89,8 +89,8 @@ NUM_FLOAT3:
 	*    -> BIN
 
 PARENTHESIS:
-    \n   -> GOOD
-    *    -> BIN
+    \n EOF -> GOOD
+    *      -> BIN
 
 VAR:
     [A-Z a-z 0-9] -> VAR
