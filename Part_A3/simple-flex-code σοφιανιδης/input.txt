@@ -2,6 +2,10 @@
 ;comment 
 ?metavliti
 onoma metavlitis
-
-
+3[]
+3 + 5 = 3
+;                       *
+" xynw \"kwlo \n polyvolop][;';;']"
 .7.2.3
+"""
+deffacts defrule test bind read printout

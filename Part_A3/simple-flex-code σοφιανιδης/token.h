@@ -5,4 +5,7 @@
 #define COMMENT 5
 #define FLOAT 6
 #define STRING 7
+#define STORED_WORD 8
+#define OPERATOR 9
+#define UNKNOWN_TOKEN 10
 /*#define FILL ME */

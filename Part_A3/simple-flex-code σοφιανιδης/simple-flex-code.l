@@ -45,10 +45,13 @@ int line = 1;
 DELIMITER       [ \t]+
 INTCONST        0|[+-]?[1-9]+[0-9]*
 VARIABLE	\?[A-Za-z0-9]+
-FACT_RULE_NAME  [A-Za-z]([A-Za-z0-9_-])*([A-Za-z0-9])
+FACT_RULE_NAME  ([A-Za-z]([A-Za-z0-9_-])*([A-Za-z0-9]))(?<!{STORED_WORD})
 COMMENT         ;.*
 FLOAT           [+-]?[0-9]+(([eE][+-]?[0-9]+)|\.[0-9]+[eE][+-]?[0-9]+|\.[0-9]+)
-STRING          "((\\\\)|(\\")|(\\n)|[^"\\\n\r])*"
+STRING          \"((\\\\)|(\\\")|(\\n)|[^\"\\\n\r])*\"
+STORED_WORD     deffacts|defrule|test|bind|read|printout
+OPERATOR        =|\+|-|\*|\/
+UNKNOWN_TOKEN   [^ \t;\n\r/]+
 
 
 
@@ -65,13 +68,16 @@ STRING          "((\\\\)|(\\")|(\\n)|[^"\\\n\r])*"
 {COMMENT}	 { return COMMENT; }
 {FLOAT}	         { return FLOAT; }
 {STRING}	 { return STRING; }
+{STORED_WORD}	 { return STORED_WORD; }
+{OPERATOR}	 { return OPERATOR; }
+{UNKNOWN_TOKEN}	 { return UNKNOWN_TOKEN; }
 \n               { line++; printf("\n"); }
 <<EOF>>		 { printf("#END-OF-FILE#\n"); exit(0); }
 
 %%
 
 /* Pinakas me ola ta tokens se antistoixia me tous orismous sto token.h */
-char *tname[7] = {"DELIMITER", "INTCONST", "VARIABLE", "FACT_RULE_NAME", "COMMENT","FLOAT","STRING"};
+char *tname[] = {"DELIMITER", "INTCONST", "VARIABLE", "FACT_RULE_NAME", "COMMENT","FLOAT","STRING","STORED_WORD","OPERATOR","UNKNOWN TOKEN"};
 
 
 /* H synarthsh main: O kwdikas autos tha topotheththei autousios sto
