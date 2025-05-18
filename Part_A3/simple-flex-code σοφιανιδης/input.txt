@@ -1,11 +1,61 @@
-2 2.3 .7.9e12 
-;comment 
-?metavliti
-onoma metavlitis
-3[]
-3 + 5 = 3
-;                       *
-" xynw \"kwlo \n polyvolop][;';;']"
-.7.2.3
-"""
-deffacts defrule test bind read printout
+; This is a test comment
+
+?var1
+?X123
+
+var1
+
+123
++42
+-999
+0
+
+0123
+
+3.14
+-2.71
+6.02e23
++1.5e-10
+
+1.2.3
+2e
+
+"simple string"
+"string with \"escaped quotes\""
+"multi\nline\nstring"
+
+"unclosed string
+"another one without ending
+
+deffacts
+defrule
+test
+bind
+read
+printout
+
+MyFact
+some_rule-1
+anotherFact123
+
+test
+deffacts
+
+=
++
+-
+*
+/
+
+		
+
+$invalid
+#badToken
+&wrong^format
+123abc
+
+
+    "asfdgsadf\\nasdfsdaf\\"
+asdfhkj"asdf
+
+2e-10.234E234

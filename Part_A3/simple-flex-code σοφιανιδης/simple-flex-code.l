@@ -42,16 +42,17 @@ int line = 1;
    Meta apo auto, mporei na ginei xrhsh twn onomatwn (aristera) anti twn,
    synhthws idiaiterws makroskelwn kai dysnohtwn, kanonikwn ekfrasewn */
 
+STORED_WORD     (deffacts|defrule|test|bind|read|printout)
 DELIMITER       [ \t]+
 INTCONST        0|[+-]?[1-9]+[0-9]*
 VARIABLE	\?[A-Za-z0-9]+
-FACT_RULE_NAME  ([A-Za-z]([A-Za-z0-9_-])*([A-Za-z0-9]))(?<!{STORED_WORD})
+FACT_RULE_NAME  ([A-Za-z]([A-Za-z0-9_-])*([A-Za-z0-9]))
 COMMENT         ;.*
 FLOAT           [+-]?[0-9]+(([eE][+-]?[0-9]+)|\.[0-9]+[eE][+-]?[0-9]+|\.[0-9]+)
 STRING          \"((\\\\)|(\\\")|(\\n)|[^\"\\\n\r])*\"
-STORED_WORD     deffacts|defrule|test|bind|read|printout
 OPERATOR        =|\+|-|\*|\/
-UNKNOWN_TOKEN   [^ \t;\n\r/]+
+UNKNOWN_TOKEN   [^ \t\n\r?;=+*\/\"'][^ \t\n\r]*|\?[^A-Za-z0-9][^ \t\n\r]*|\"[^\"\\\n\r]*(\\.[^\"\\\n\r]*)*\"?|[0-9]+[^0-9 \t\n\r.eE+-]*|[A-Za-z][^A-Za-z0-9_ \t\n\r-]*|.
+/* ayto douleyei gia ta panta pisteyw na 'nai kala to deepseek .&-*/
 
 
 
@@ -61,6 +62,7 @@ UNKNOWN_TOKEN   [^ \t;\n\r/]+
 
 %%
 
+{STORED_WORD}	 { return STORED_WORD; }
 {DELIMITER}      { return DELIMITER; }
 {INTCONST}       { return INTCONST; }
 {VARIABLE}	 { return VARIABLE; }
@@ -68,7 +70,6 @@ UNKNOWN_TOKEN   [^ \t;\n\r/]+
 {COMMENT}	 { return COMMENT; }
 {FLOAT}	         { return FLOAT; }
 {STRING}	 { return STRING; }
-{STORED_WORD}	 { return STORED_WORD; }
 {OPERATOR}	 { return OPERATOR; }
 {UNKNOWN_TOKEN}	 { return UNKNOWN_TOKEN; }
 \n               { line++; printf("\n"); }
@@ -77,7 +78,7 @@ UNKNOWN_TOKEN   [^ \t;\n\r/]+
 %%
 
 /* Pinakas me ola ta tokens se antistoixia me tous orismous sto token.h */
-char *tname[] = {"DELIMITER", "INTCONST", "VARIABLE", "FACT_RULE_NAME", "COMMENT","FLOAT","STRING","STORED_WORD","OPERATOR","UNKNOWN TOKEN"};
+char *tname[] = {"STORED_WORD","DELIMITER", "INTCONST", "VARIABLE", "FACT_RULE_NAME", "COMMENT","FLOAT","STRING","OPERATOR","UNKNOWN TOKEN"};
 
 
 /* H synarthsh main: O kwdikas autos tha topotheththei autousios sto
