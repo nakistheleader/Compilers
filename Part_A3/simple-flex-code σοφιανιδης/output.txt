@@ -1,0 +1,3 @@
+	Line=1, token=INTCONST, value="58"
+	Line=2, token=INTCONST, value="135"
+	Line=3, token=INTCONST, value="4321"
