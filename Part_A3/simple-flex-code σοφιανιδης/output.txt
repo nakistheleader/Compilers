@@ -7,7 +7,7 @@
 	###DIKO MOY INPUTFILE###
 
 
-		Line=1, token=COMMENT, value="; This is a test comment"
+	Line=1, token=COMMENT, value="; This is a test comment"
 
 
         Line=3, token=VARIABLE, value="?var1"
