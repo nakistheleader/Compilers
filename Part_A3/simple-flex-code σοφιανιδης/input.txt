@@ -1,13 +1,7 @@
-5 23
-58
-+8
--115
-135
-4321
-0
+2 2.3 .7.9e12 
+;comment 
 ?metavliti
-Kanonas1 23
-;kalispera comment kalo
-2.3
-2
-1.6e12
+onoma metavlitis
+
+
+.7.2.3
