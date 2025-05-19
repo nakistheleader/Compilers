@@ -46,14 +46,12 @@ STORED_WORD     (deffacts|defrule|test|bind|read|printout)
 DELIMITER       [ \t]+
 INTCONST        0|[+-]?[1-9]+[0-9]*
 VARIABLE	\?[A-Za-z0-9]+
-FACT_RULE_NAME  ([A-Za-z]([A-Za-z0-9_-])*([A-Za-z0-9]))
+FACT_RULE_NAME  [A-Za-z]([A-Za-z0-9_-])*
 COMMENT         ;.*
 FLOAT           [+-]?[0-9]+(([eE][+-]?[0-9]+)|\.[0-9]+[eE][+-]?[0-9]+|\.[0-9]+)
 STRING          \"((\\\\)|(\\\")|(\\n)|[^\"\\\n\r])*\"
 OPERATOR        =|\+|-|\*|\/
-UNKNOWN_TOKEN   [^ \t\n\r?;=+*\/\"'][^ \t\n\r]*|\?[^A-Za-z0-9][^ \t\n\r]*|\"[^\"\\\n\r]*(\\.[^\"\\\n\r]*)*\"?|[0-9]+[^0-9 \t\n\r.eE+-]*|[A-Za-z][^A-Za-z0-9_ \t\n\r-]*|.
-/* ayto douleyei gia ta panta pisteyw na 'nai kala to deepseek .&-*/
-
+UNKNOWN_TOKEN   [^ \t;\n\r/]+
 
 
 /* Gia kathe pattern (aristera) pou tairiazei ekteleitai o antistoixos

@@ -1,31 +1,87 @@
-; This is a test comment
-
-?var1
-?X123
-
-var1
-
-123
-+42
--999
+5
++8
+-115
+1234567
 0
+-1
+-0
++0 
+100000000000001
+3221d3232
+-+12
+123 83
+312.345
++2134.54
+-3242.7865
+345.34e684
+873.2E43
+284.26e+10
+562.209e-5 
+562.23746.4
+1645.268E-2689
+.63E67
 
-0123
+static-facts
+static-factsMoveUp
+CUBES
+WRONG / WORD
+sum-1
+table
+BAD 1223 WORD
+packman
 
-3.14
--2.71
-6.02e23
-+1.5e-10
+123-1
+123A_1
+A123_1
+A-21-b
+?
+?x
+?X
+?ad
+?X1b23
+?ABcd1234de 
+?ad/da 
+?test 10
+?thiswillnot
+?var,var1
 
-1.2.3
-2e
-
-"simple string"
-"string with \"escaped quotes\""
-"multi\nline\nstring"
-
-"unclosed string
-"another one without ending
+                     
+(
+)
+;kazndsfks
+;2398745
+;@#%^%%$#">?"<{<>"
+;ksjdbn sdjkfbi
+;aksjb091!@#:{P
+;skjdnf 1234        @#!%$#?":">
+;jaha 234@#$ds0 ; 
+;
+ ; 
+    ;asd
+asd;asd
+12;jknfd
+@#$;mjkd
+kas234@#$;as
+;ka 21
+""
+"asdsadf"
+"12345324"
+"!#$@%$%#"
+" "
+"       "
+"alsnd 2143     @#%"
+"sjfd#%$#@9876432"
+"lksdf\\2834\"!@$32\n"
+        "kajnds"
+"scbds\mklsd"
+"slkjdnc"ckjsdnc"
+"kjsdf"
+"kajsnda
+"ASdasd
+"akhsb\"
+jas"kasjn"
+lkamsd"
+123 ;123 
 
 deffacts
 defrule
@@ -33,29 +89,3 @@ test
 bind
 read
 printout
-
-MyFact
-some_rule-1
-anotherFact123
-
-test
-deffacts
-
-=
-+
--
-*
-/
-
-		
-
-$invalid
-#badToken
-&wrong^format
-123abc
-
-
-    "asfdgsadf\\nasdfsdaf\\"
-asdfhkj"asdf
-
-2e-10.234E234

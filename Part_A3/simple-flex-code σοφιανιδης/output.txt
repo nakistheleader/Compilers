@@ -3,113 +3,119 @@
 	Line=3, token=INTCONST, value="4321"
 
 
-
-	###DIKO MOY INPUTFILE###
-
-
-	Line=1, token=COMMENT, value="; This is a test comment"
-
-
-        Line=3, token=VARIABLE, value="?var1"
-
-        Line=4, token=VARIABLE, value="?X123"
-
-
-        Line=6, token=FACT_RULE_NAME, value="var1"
-
-
-        Line=8, token=INTCONST, value="123"
-
-        Line=9, token=INTCONST, value="+42"
-
-        Line=10, token=INTCONST, value="-999"
-
-        Line=11, token=INTCONST, value="0"
-
-
-        Line=13, token=UNKNOWN TOKEN, value="0123"
-
-
-        Line=15, token=FLOAT, value="3.14"
-
-        Line=16, token=FLOAT, value="-2.71"
-
-        Line=17, token=FLOAT, value="6.02e23"
-
-        Line=18, token=FLOAT, value="+1.5e-10"
-
-
-        Line=20, token=UNKNOWN TOKEN, value="1.2.3"
-
-        Line=21, token=UNKNOWN TOKEN, value="2e"
-
-
-        Line=23, token=STRING, value=""simple string""
-
-        Line=24, token=STRING, value=""string with \"escaped quotes\"""
-
-        Line=25, token=STRING, value=""multi\nline\nstring""
-
-
-        Line=27, token=UNKNOWN TOKEN, value=""unclosed string"
-
-        Line=28, token=UNKNOWN TOKEN, value=""another one without ending"
-
-
-        Line=30, token=STORED_WORD, value="deffacts"
-
-        Line=31, token=STORED_WORD, value="defrule"
-
-        Line=32, token=STORED_WORD, value="test"
-
-        Line=33, token=STORED_WORD, value="bind"
-
-        Line=34, token=STORED_WORD, value="read"
-
-        Line=35, token=STORED_WORD, value="printout"
-
-
-        Line=37, token=FACT_RULE_NAME, value="MyFact"
-
-        Line=38, token=FACT_RULE_NAME, value="some_rule-1"
-
-        Line=39, token=FACT_RULE_NAME, value="anotherFact123"
-
-
-        Line=41, token=STORED_WORD, value="test"
-
-        Line=42, token=STORED_WORD, value="deffacts"
-
-
-        Line=44, token=OPERATOR, value="="
-
-        Line=45, token=OPERATOR, value="+"
-
-        Line=46, token=OPERATOR, value="-"
-
-        Line=47, token=OPERATOR, value="*"
-
-        Line=48, token=OPERATOR, value="/"
-
-
-        Line=50, token=DELIMITER, value="               "
-
-
-        Line=52, token=UNKNOWN TOKEN, value="$invalid"
-
-        Line=53, token=UNKNOWN TOKEN, value="#badToken"
-
-        Line=54, token=UNKNOWN TOKEN, value="&wrong^format"
-
-        Line=55, token=UNKNOWN TOKEN, value="123abc"
-
-
-
-        Line=58, token=DELIMITER, value="    "
-        Line=58, token=STRING, value=""asfdgsadf\\nasdfsdaf\\""
-
-        Line=59, token=UNKNOWN TOKEN, value="asdfhkj"asdf"
-
-
-        Line=61, token=UNKNOWN TOKEN, value="2e-10.234E234"
+###DIKO MOY INPUT FILE###
+	Line=1, token=INTCONST, value="5"
+    Line=2, token=INTCONST, value="+8"
+    Line=3, token=INTCONST, value="-115"
+    Line=4, token=INTCONST, value="1234567"
+    Line=5, token=INTCONST, value="0"
+    Line=6, token=INTCONST, value="-1"
+    Line=7, token=UNKNOWN TOKEN, value="-0"
+    Line=8, token=UNKNOWN TOKEN, value="+0"
+    Line=8, token=DELIMITER, value=" "
+    Line=9, token=INTCONST, value="100000000000001"
+    Line=10, token=UNKNOWN TOKEN, value="3221d3232"
+    Line=11, token=UNKNOWN TOKEN, value="-+12"
+    Line=12, token=INTCONST, value="123"
+    Line=12, token=DELIMITER, value=" "
+    Line=12, token=INTCONST, value="83"
+    Line=13, token=FLOAT, value="312.345"
+    Line=14, token=FLOAT, value="+2134.54"
+    Line=15, token=FLOAT, value="-3242.7865"
+    Line=16, token=FLOAT, value="345.34e684"
+    Line=17, token=FLOAT, value="873.2E43"
+    Line=18, token=FLOAT, value="284.26e+10"
+    Line=19, token=FLOAT, value="562.209e-5"
+    Line=19, token=DELIMITER, value=" "
+    Line=20, token=UNKNOWN TOKEN, value="562.23746.4"
+    Line=21, token=FLOAT, value="1645.268E-2689"
+    Line=22, token=UNKNOWN TOKEN, value=".63E67"
+    Line=24, token=FACT_RULE_NAME, value="static-facts"
+    Line=25, token=FACT_RULE_NAME, value="static-factsMoveUp"
+    Line=26, token=FACT_RULE_NAME, value="CUBES"
+    Line=27, token=FACT_RULE_NAME, value="WRONG"
+    Line=27, token=DELIMITER, value=" "
+    Line=27, token=OPERATOR, value="/"
+    Line=27, token=DELIMITER, value=" "
+    Line=27, token=FACT_RULE_NAME, value="WORD"
+    Line=28, token=FACT_RULE_NAME, value="sum-1"
+    Line=29, token=FACT_RULE_NAME, value="table"
+    Line=30, token=FACT_RULE_NAME, value="BAD"
+    Line=30, token=DELIMITER, value=" "
+    Line=30, token=INTCONST, value="1223"
+    Line=30, token=DELIMITER, value=" "
+    Line=30, token=FACT_RULE_NAME, value="WORD"
+    Line=31, token=FACT_RULE_NAME, value="packman"
+    Line=33, token=UNKNOWN TOKEN, value="123-1"
+    Line=34, token=UNKNOWN TOKEN, value="123A_1"
+    Line=35, token=FACT_RULE_NAME, value="A123_1"
+    Line=36, token=FACT_RULE_NAME, value="A-21-b"
+    Line=37, token=UNKNOWN TOKEN, value="?"
+    Line=38, token=VARIABLE, value="?x"
+    Line=39, token=VARIABLE, value="?X"
+    Line=40, token=VARIABLE, value="?ad"
+    Line=41, token=VARIABLE, value="?X1b23"
+    Line=42, token=VARIABLE, value="?ABcd1234de"
+    Line=42, token=DELIMITER, value=" "
+    Line=43, token=VARIABLE, value="?ad"
+    Line=43, token=OPERATOR, value="/"
+    Line=43, token=FACT_RULE_NAME, value="da"
+    Line=43, token=DELIMITER, value=" "
+    Line=44, token=VARIABLE, value="?test"
+    Line=44, token=DELIMITER, value=" "
+    Line=44, token=INTCONST, value="10"
+    Line=45, token=VARIABLE, value="?thiswillnot"
+    Line=46, token=UNKNOWN TOKEN, value="?var,var1"
+    Line=48, token=DELIMITER, value="                     "
+    Line=49, token=UNKNOWN TOKEN, value="("
+    Line=50, token=UNKNOWN TOKEN, value=")"
+    Line=51, token=COMMENT, value=";kazndsfks"
+    Line=52, token=COMMENT, value=";2398745"
+    Line=53, token=COMMENT, value=";@#%^%%$#">?"<{<>""
+    Line=54, token=COMMENT, value=";ksjdbn sdjkfbi"
+    Line=55, token=COMMENT, value=";aksjb091!@#:{P"
+    Line=56, token=COMMENT, value=";skjdnf 1234        @#!%$#?":">"
+    Line=57, token=COMMENT, value=";jaha 234@#$ds0 ; "
+    Line=58, token=COMMENT, value=";"
+    Line=59, token=DELIMITER, value=" "
+    Line=59, token=COMMENT, value="; "
+    Line=60, token=DELIMITER, value="    "
+    Line=60, token=COMMENT, value=";asd"
+    Line=61, token=FACT_RULE_NAME, value="asd"
+    Line=61, token=COMMENT, value=";asd"
+    Line=62, token=INTCONST, value="12"
+    Line=62, token=COMMENT, value=";jknfd"
+    Line=63, token=UNKNOWN TOKEN, value="@#$"
+    Line=63, token=COMMENT, value=";mjkd"
+    Line=64, token=UNKNOWN TOKEN, value="kas234@#$"
+    Line=64, token=COMMENT, value=";as"
+    Line=65, token=COMMENT, value=";ka 21"
+    Line=66, token=STRING, value=""""
+    Line=67, token=STRING, value=""asdsadf""
+    Line=68, token=STRING, value=""12345324""
+    Line=69, token=STRING, value=""!#$@%$%#""
+    Line=70, token=STRING, value="" ""
+    Line=71, token=STRING, value=""       ""
+    Line=72, token=STRING, value=""alsnd 2143     @#%""
+    Line=73, token=STRING, value=""sjfd#%$#@9876432""
+    Line=74, token=STRING, value=""lksdf\\2834\"!@$32\n""
+    Line=75, token=DELIMITER, value="        "
+    Line=75, token=STRING, value=""kajnds""
+    Line=76, token=UNKNOWN TOKEN, value=""scbds\mklsd""
+    Line=77, token=UNKNOWN TOKEN, value=""slkjdnc"ckjsdnc""
+    Line=78, token=STRING, value=""kjsdf""
+    Line=79, token=UNKNOWN TOKEN, value=""kajsnda"
+    Line=80, token=UNKNOWN TOKEN, value=""ASdasd"
+    Line=81, token=UNKNOWN TOKEN, value=""akhsb\""
+    Line=82, token=UNKNOWN TOKEN, value="jas"kasjn""
+    Line=83, token=UNKNOWN TOKEN, value="lkamsd""
+    Line=84, token=INTCONST, value="123"
+    Line=84, token=DELIMITER, value=" "
+    Line=84, token=COMMENT, value=";123 "
+    Line=86, token=STORED_WORD, value="deffacts"
+    Line=87, token=STORED_WORD, value="defrule"
+    Line=88, token=STORED_WORD, value="test"
+    Line=89, token=STORED_WORD, value="bind"
+    Line=90, token=STORED_WORD, value="read"
+    Line=91, token=STORED_WORD, value="printout"
 #END-OF-FILE#
