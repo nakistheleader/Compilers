@@ -101,12 +101,8 @@ VAR_S1:
     *             -> BIN
 NAMES_S1:
     [A-Z a-z 0-9] -> NAMES_S1
-    - _           -> NAMES_S2
+    - _           -> NAMES_S1
     \n EOF       -> GOOD
-    *             -> BIN
-NAMES_S2:
-    [A-Z a-z 0-9] -> NAMES_S1
-    - _           -> NAMES_S2
     *             -> BIN
 
 BIN:
