@@ -20,3 +20,5 @@ SB://BAD κατάσταση
 	EOF  -> BAD
 	*    -> SB
 GOOD (OK):
+	EOF -> GOOD
+	*   -> SB
