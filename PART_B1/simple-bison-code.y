@@ -57,8 +57,8 @@ int yylex() {
 	char buf[100];
 	char num = 0;
 	int zero = 0;
-	int minus_cnt = 1;
-    char c;
+	int minus_cnt = 0;
+    char c, c2;
 
 	// Diabase enan xarakthra apo thn eisodo
 	c = getchar();
@@ -77,11 +77,8 @@ int yylex() {
     }
 
 	if(c == '+' || c == '-'){
-		if(c == '-'){
-			minus_cnt = -1;
-		}
-		c = getchar();
-		if (c == ' ' || c == '\t'){
+		c2 = getchar();
+		if (c2 == ' ' || c2 == '\t'){
 			if (c == '+'){
 			    printf("\tScanner returned: PLUS (%c)\n", c);
 			    return PLUS;
@@ -92,6 +89,10 @@ int yylex() {
 			}
 		}
 		else{
+			if(c == '-'){
+				minus_cnt = -1;
+			}
+			c = c2;
 			while (c >= '0' && c <= '9'){
 				if (zero > 0) { zero = 0; yyerror("integer starting with zero"); exit(1); }
 				if (c == '0' && !num) zero++;
@@ -99,13 +100,13 @@ int yylex() {
 				yylval = (yylval * 10) + (c - '0');
 				num = 1;
 				c = getchar();
+				if(minus_cnt) { yylval *= minus_cnt; minus_cnt = 0;}
     		}
 		}
 	}
 
     if (num){
 		ungetc(c, stdin);
-		yylval = yylval * minus_cnt;
 		printf("\tScanner returned: INTCONST (%d)\n", yylval);
 		return INTCONST;
 	}
@@ -120,16 +121,6 @@ int yylex() {
 		printf("\tScanner returned: DIV (%c)\n", c);
 		return DIV;
 	}
-
-	/*if (c == '+'){
-		printf("\tScanner returned: PLUS (%c)\n", c);
-		return PLUS;
-	}
-
-	if (c == '-'){
-		printf("\tScanner returned: MINUS (%c)\n", c);
-		return MINUS;
-	}*/
 
 	// Ean prokeitai gia ton eidiko xarakthra neas grammhs
     if (c == '\n'){
