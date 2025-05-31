@@ -25,7 +25,7 @@ void yyerror(char *);
 %}
 
 /* Orismos twn anagnwrisimwn lektikwn monadwn. */
-%token INTCONST MULT DIV PLUS MINUS NEWLINE /* FILL ME */
+%token INTCONST MULT DIV PLUS MINUS NEWLINE PARENTHESES COMMENT /* FILL ME */
 
 /* Orismos proteraiothtwn sta tokens */
 %left PLUS MINUS
@@ -47,9 +47,12 @@ expr:
 		| DIV expr expr    { $$ = $2 / $3; }
 		| PLUS expr expr   { $$ = $2 + $3; }
 		| MINUS expr expr  { $$ = $2 - $3; }
+		| PARENTHESES expr PARENTHESES  { $$ = $2; }
 /* FILL ME */
         ;
 %%
+
+int parentheses_cnt = 0;
 
 /* H synarthsh yylex ylopoiei enan autonomo lektiko analyth. Edw anagnwrizontai
    oi lektikes monades ths glwssas Uni-CLIPS */
@@ -122,9 +125,23 @@ int yylex() {
 		return DIV;
 	}
 
+	if(c == '(' ){
+		parentheses_cnt++;
+		printf("\tScanner returned: PARENTHESES (%c)\n", c);
+		return PARENTHESES;
+	}
+	else if(c == ')' ){
+		parentheses_cnt--;
+		printf("\tScanner returned: PARENTHESES (%c)\n", c);
+		return PARENTHESES;
+	}
+
 	// Ean prokeitai gia ton eidiko xarakthra neas grammhs
     if (c == '\n'){
 		yylval = 0;
+		if(parentheses_cnt){
+			yyerror("syntax error, parentheses missing");
+		}
 		printf("\tScanner returned: NEWLINE (\\n)\n");
 		return NEWLINE;
 	}
@@ -138,7 +155,7 @@ int yylex() {
 	/* FILL ME */
 
 	// Gia otidhpote allo kalese thn yyerror me mhnyma lathous
-	yyerror("kolo invalid character");
+	yyerror("invalid character");
 }
 
 
