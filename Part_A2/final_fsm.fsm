@@ -19,7 +19,7 @@ STRINGS:
     \n     -> BIN
 STRINGS_S1:
     \n     -> GOOD
-    *      -> BIN
+    * EOF  -> BIN
 STRINGS_S2:
     \\ " n -> STRINGS
     *      -> BIN
