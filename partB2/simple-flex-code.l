@@ -33,50 +33,19 @@ UNKNOWN_TOKEN   [^ \t;\n\r/]+
 %%
 
 {STORED_WORD}	    { return STORED_WORD; }
-{DELIMITER}        { return DELIMITER; }
-{INTCONST}         { return INTCONST; }
+{DELIMITER}        { /*return DELIMITER;*/ }
+{INTCONST}         {  yylval = atoi(yytext);return INTCONST; }
 {VARIABLE}	       { return VARIABLE; }
 {FACT_RULE_NAME}   { return FACT_RULE_NAME; }
 {COMMENT}	       { return COMMENT; }
-{FLOAT}	          { return FLOAT; }
+{FLOAT}	          { yylval = atof(yytext); return FLOAT; }
 {STRING}	          { return STRING; }
 "+"   { return PLUS; }
 "-"   { return MINUS; }
 "*"   { return MULT; }
 "/"   { return DIV; }
-\n                 { line++; printf("\n"); }
+\n    { line++; return NEWLINE; }
 {UNKNOWN_TOKEN}	 { return UNKNOWN_TOKEN; }
 <<EOF>>		       { printf("#END-OF-FILE#\n"); exit(0); }
 
 %%
-
-/* Ο πίνακας tname περιέχει όλα τα ονόματα των tokens που χρησιμοποιούμε στον λεκτικό μας αναλυτή.
-   Είναι με την ίδια σειρά με αυτή που βρίσκονται στο αρχείο token.h. */
-//char *tname[] = {"STORED_WORD","DELIMITER", "INTCONST", "VARIABLE", "FACT_RULE_NAME", "COMMENT","FLOAT","STRING","OPERATOR","UNKNOWN TOKEN"};
-/*
-int main(int argc, char **argv){
-        int token;
-
-        if(argc == 3){
-                if(!(yyin = fopen(argv[1], "r"))) {
-                        fprintf(stderr, "Cannot read file: %s\n", argv[1]);
-                        return 1;
-                }
-                if(!(yyout = fopen(argv[2], "w"))) {
-                        fprintf(stderr, "Cannot create file: %s\n", argv[2]);
-                        return 1;
-                }
-        }
-        else if(argc == 2){
-                if(!(yyin = fopen(argv[1], "r"))) {
-                        fprintf(stderr, "Cannot read file: %s\n", argv[1]);
-                        return 1;
-                }
-        }
-
-        while( (token=yylex()) >= 0){
-
-                fprintf(yyout, "\tLine=%d, token=%s, value=\"%s\"\n", line, tname[token-1], yytext);
-        }
-        return 0;
-}*/

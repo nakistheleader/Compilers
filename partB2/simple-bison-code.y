@@ -24,12 +24,14 @@ int yylex(void);
 void yyerror(char *);
 %}
 
+
 /* Orismos twn anagnwrisimwn lektikwn monadwn. */
-%token INTCONST MULT DIV PLUS MINUS NEWLINE PARENTHESES STORED_WORD DELIMITER VARIABLE FACT_RULE_NAME COMMENT FLOAT STRING OPERATOR UNKNOWN_TOKEN /* FILL ME */
+%token  INTCONST FLOAT MULT DIV PLUS MINUS NEWLINE PARENTHESES STORED_WORD DELIMITER VARIABLE FACT_RULE_NAME COMMENT  STRING OPERATOR UNKNOWN_TOKEN /* FILL ME */
 
 /* Orismos proteraiothtwn sta tokens */
 %left PLUS MINUS
 %left MULT DIV
+
 
 %%
 
@@ -43,7 +45,7 @@ program:
         ;
 expr:
         INTCONST           { $$ = $1; }
-		FLOAT              { $$ = $1; }
+	| FLOAT              { $$ = $1; }
         | MULT expr expr   { $$ = $2 * $3; }
 		| DIV expr expr    { $$ = $2 / $3; }
 		| PLUS expr expr   { $$ = $2 + $3; }
@@ -51,6 +53,7 @@ expr:
 		| PARENTHESES expr PARENTHESES  { $$ = $2; }
 		;
 %%
+
 
 int parentheses_cnt = 0;
 
