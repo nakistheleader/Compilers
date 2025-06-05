@@ -18,20 +18,8 @@
 %}
 
 /* token definition */
-%token INTCONST 
-%token VARIABLE
-%token OPERATOR
-%token EQUALS
-%token DEFRULE 
-%token DEFFACTS 
-%token TEST 
-%token PRINTOUT 
-%token READ 
-%token BIND 
-%token STATE 
-%token LEFT_PAR
-%token RIGHT_PAR
-%token ARROW
+%token INTCONST VARIABLE OPERATOR ISON DEFRULE DEFFACTS TEST PRINTOUT READ BIND FACT_RULE_NAME LEFT_PAR RIGHT_PAR VELOS
+
 
 %start program
 
@@ -63,10 +51,10 @@ mathrecursion:
 	|mathrecursion expr
 	;
 
-defrule: LEFT_PAR DEFRULE STATE defruleRecursion ARROW action RIGHT_PAR{ correctExprs++; }
+defrule: LEFT_PAR DEFRULE FACT_RULE_NAME defruleRecursion VELOS action RIGHT_PAR{ correctExprs++; }
 ;
 
-deffacts: LEFT_PAR DEFFACTS STATE fact RIGHT_PAR { correctExprs++; }
+deffacts: LEFT_PAR DEFFACTS FACT_RULE_NAME fact RIGHT_PAR { correctExprs++; }
 ;
 
 test: LEFT_PAR TEST equal RIGHT_PAR { correctExprs++; }
@@ -80,23 +68,23 @@ read: LEFT_PAR READ VARIABLE RIGHT_PAR { correctExprs++; }
 
 bind: LEFT_PAR BIND VARIABLE expr RIGHT_PAR { correctExprs++; }
 ;
-/*Αναδρομική κλήση του equal*/
-equal: LEFT_PAR EQUALS expr expr RIGHT_PAR
-	|equal LEFT_PAR EQUALS expr expr RIGHT_PAR
+
+equal: LEFT_PAR ISON expr expr RIGHT_PAR
+	|ISON LEFT_PAR ISON expr expr RIGHT_PAR
 	;
 
 recursion: expr
 	|recursion expr
-	|STATE
-	|recursion STATE
+	|FACT_RULE_NAME
+	|recursion FACT_RULE_NAME
 	;
 
-fact: LEFT_PAR STATE recursion RIGHT_PAR
-	|fact LEFT_PAR STATE recursion RIGHT_PAR
+fact: LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
+	|fact LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
 	;
 
-defruleRecursion: LEFT_PAR STATE recursion RIGHT_PAR
-	|defruleRecursion LEFT_PAR STATE recursion RIGHT_PAR
+defruleRecursion: LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
+	|defruleRecursion LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
 	|test
 	|defruleRecursion test
 	;
@@ -111,8 +99,8 @@ action: printout
 	|action read
 	;
 
-printoutRecursion: LEFT_PAR STATE recursion RIGHT_PAR
-	|printoutRecursion LEFT_PAR STATE recursion RIGHT_PAR
+printoutRecursion: LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
+	|printoutRecursion LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
 	|LEFT_PAR expr recursion RIGHT_PAR
 	|printoutRecursion LEFT_PAR expr recursion RIGHT_PAR
 	|expr
