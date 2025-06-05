@@ -18,7 +18,7 @@
 %}
 
 /* token definition */
-%token INTCONST VARIABLE OPERATOR ISON DEFRULE DEFFACTS TEST PRINTOUT READ BIND FACT_RULE_NAME LEFT_PAR RIGHT_PAR VELOS
+%token INTCONST VARIABLE OPERATOR ISON DEFRULE DEFFACTS TEST PRINTOUT READ BIND FACT_RULE_NAME LEFT_PAR RIGHT_PAR VELOS STRING
 
 
 %start program
@@ -29,39 +29,76 @@
 //Declaration of the rules and syntax
 
 program:
-    program expr              { printf("\nMathimatic Expression."); }
-	|program deffacts         { printf("\nDeffacts Definition."); correctExprs++; }
+	program deffacts         { printf("\nDeffacts Definition."); correctExprs++; }
 	|program defrule          { printf("\nDefrule Definition."); correctExprs++; }
+    |program mathoperation     { printf("\nMathimatic Expression."); }
+	|program comparison       { printf("\nΨιλοΚαταλαβες Expression."); correctExprs++; }
 	|program test             { printf("\nTest Function."); correctExprs++; }
+	|program bind             { printf("\nBind Function."); correctExprs++; }
 	|program printout         { printf("\nPrint Function."); correctExprs++; }
 	|program read             { printf("\nRead Function."); correctExprs++; }
-	|program bind             { printf("\nBind Function."); correctExprs++; }
 	|program error	          { printf("\nSyntax error");  incorrectExprs++;}
 	|
+	;
+
+deffacts: 
+	LEFT_PAR DEFFACTS FACT_RULE_NAME fact_list RIGHT_PAR { correctExprs++; }
+	;
+
+fact_list: 
+	LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
+	|fact_list LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
+	;
+
+elements: 
+	expr
+	|elements expr
+	|FACT_RULE_NAME
+	|elements FACT_RULE_NAME
+	;
+	
+mathoperation:
+	LEFT_PAR OPERATOR expr expr_list RIGHT_PAR   { correctExprs++; }
 	;
 
 expr:
 	INTCONST	  { correctExprs++; }
 	|VARIABLE	{ correctExprs++; }
-	|LEFT_PAR OPERATOR expr mathrecursion RIGHT_PAR   { correctExprs++; }
+	|LEFT_PAR OPERATOR expr expr_list RIGHT_PAR   { correctExprs++; }
 	;
 
-mathrecursion: 
+expr_list: 
 	expr
-	|mathrecursion expr
+	|expr_list expr
 	;
 
-defrule: LEFT_PAR DEFRULE FACT_RULE_NAME defruleRecursion VELOS action RIGHT_PAR{ correctExprs++; }
-;
+comparison:
+	LEFT_PAR ISON expr expr RIGHT_PAR   { correctExprs++; }
+	;
 
-deffacts: LEFT_PAR DEFFACTS FACT_RULE_NAME fact RIGHT_PAR { correctExprs++; }
-;
 
-test: LEFT_PAR TEST equal RIGHT_PAR { correctExprs++; }
-;
 
-printout: LEFT_PAR PRINTOUT printoutRecursion RIGHT_PAR { correctExprs++; }
-;
+defrule: 
+	LEFT_PAR DEFRULE FACT_RULE_NAME defruleRecursion VELOS action RIGHT_PAR{ correctExprs++; }
+	;
+
+defruleRecursion: LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
+	|defruleRecursion LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
+	|test
+	|defruleRecursion test
+	;
+
+test: 
+	LEFT_PAR TEST equal RIGHT_PAR { correctExprs++; }
+	;
+
+equal: LEFT_PAR ISON expr expr RIGHT_PAR
+	|equal LEFT_PAR ISON expr expr RIGHT_PAR
+	;
+
+printout: 
+	LEFT_PAR PRINTOUT printoutRecursion RIGHT_PAR { correctExprs++; }
+	;
 
 read: LEFT_PAR READ VARIABLE RIGHT_PAR { correctExprs++; }
 ;
@@ -69,25 +106,12 @@ read: LEFT_PAR READ VARIABLE RIGHT_PAR { correctExprs++; }
 bind: LEFT_PAR BIND VARIABLE expr RIGHT_PAR { correctExprs++; }
 ;
 
-equal: LEFT_PAR ISON expr expr RIGHT_PAR
-	|ISON LEFT_PAR ISON expr expr RIGHT_PAR
-	;
 
-recursion: expr
-	|recursion expr
-	|FACT_RULE_NAME
-	|recursion FACT_RULE_NAME
-	;
 
-fact: LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
-	|fact LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
-	;
 
-defruleRecursion: LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
-	|defruleRecursion LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
-	|test
-	|defruleRecursion test
-	;
+
+
+
 
 action: printout
 	|action printout
@@ -99,10 +123,10 @@ action: printout
 	|action read
 	;
 
-printoutRecursion: LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
-	|printoutRecursion LEFT_PAR FACT_RULE_NAME recursion RIGHT_PAR
-	|LEFT_PAR expr recursion RIGHT_PAR
-	|printoutRecursion LEFT_PAR expr recursion RIGHT_PAR
+printoutRecursion: LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
+	|printoutRecursion LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
+	|LEFT_PAR expr elements RIGHT_PAR
+	|printoutRecursion LEFT_PAR expr elements RIGHT_PAR
 	|expr
 	|printoutRecursion expr
 	;
@@ -137,13 +161,13 @@ int main(int argc,char **argv){
 
 	}
 
-	//printing information about the correct words, exprations and inorrect words and expation if they excist
+	//printing information about the correct words, expressions and incorrect words and expressions if they exist
 	printf("Number of correct words detected : %d\n",correctWords);
-	printf("Number of correct expretions detected : %d\n",correctExprs);
+	printf("Number of correct expressions detected : %d\n",correctExprs);
 
-	printf("Number of incorect words detected : %d\n",incorrectWords);
+	printf("Number of incorrect words detected : %d\n",incorrectWords);
 	incorrectExprs = resetIncorrectExprs(incorrectExprs); 
-	printf("Number of incorect expretions detected : %d\n",incorrectExprs-1);
+	printf("Number of incorrect expressions detected : %d\n",incorrectExprs-1);
 	
 	return 0;
 }

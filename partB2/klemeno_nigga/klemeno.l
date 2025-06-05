@@ -28,10 +28,11 @@ FLOAT           [+-]?[0-9]+(([eE][+-]?[0-9]+)|\.[0-9]+[eE][+-]?[0-9]+|\.[0-9]+)
 DEFFACTS        "deffacts"
 DEFRULE         "defrule"
 TEST            "test"
-PRINT           "printout t"
+PRINTOUT        "printout t"
 READ            "read"
 BIND            "bind"
 FACT_RULE_NAME  [a-zA-Z][0-9a-zA-Z_-]*
+STRING          \"((\\\\)|(\\\")|(\\n)|[^\"\\\n\r])*\"
 VELOS           "->"
 NEWLINE         \n
 ERROR           .
@@ -50,10 +51,11 @@ ERROR           .
 {DEFFACTS}         { /*prn("DEFFACTS");*/  correctWords++; return DEFFACTS; }
 {DEFRULE}          { /*prn("DEFRULE");*/  correctWords++; return DEFRULE; }
 {TEST}             { /*prn("TEST");*/  correctWords++; return TEST; }
-{PRINT}            { /*prn("PRINT");*/  correctWords++; return PRINTOUT; }
+{PRINTOUT}         { /*prn("PRINT");*/  correctWords++; return PRINTOUT; }
 {READ}             { /*prn("READ");*/  correctWords++; return READ; }
 {BIND}             { /*prn("BIND");*/  correctWords++; return BIND; }
 {FACT_RULE_NAME}   { /*prn("FACT_RULE_NAME");*/  correctWords++; return FACT_RULE_NAME; }
+{STRING}		   { return STRING;}
 {ERROR}            { printf("\nWrong word definition at line: %d", line); incorrectWords++;}
 {NEWLINE}          { line++; printf("\n"); }
 
