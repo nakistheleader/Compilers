@@ -1,16 +1,13 @@
 %{
-  //Declaration of varianbles, functions and methods used
-  #include <stdio.h>
+
+	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
-	#define YYDEBUG 1 
-	#define YYSTYPE char*
 	int line = 1;
 	int correctWords = 0;
 	int incorrectWords = 0;
 	int incorrectExprs = 0;
 	int correctExprs = 0; //Counts correct statements
-	extern char *yytext;
 	int yylex();
 	int yyerror(const char *s); //changed the function to accept char pointer to avoid warnings during compiling 
 	int resetIncorrectExprs (int i);
@@ -28,13 +25,12 @@
 //Declaration of the rules and syntax
 
 program:
-	program deffacts         { printf("Βρέθηκε Ορισμός Γεγονότων Γραμμή %d\n",line); correctExprs++; }
+	program deffacts          { printf("Βρέθηκε Ορισμός Γεγονότων Γραμμή %d\n",line); correctExprs++; }
 	|program defrule          { printf("Βρέθηκε Ορισμός Κανόνα.\n"); correctExprs++; }
-    |program mathoperation     { printf("Mathimatic Expression.\n"); }
-	|program comparison       { printf("ΨιλοΚαταλαβες Expression.\n"); correctExprs++; }
+    |program mathoperation    { printf("Mathimatic Expression.\n"); correctExprs++; }
+	|program comparison       { printf("Συγκρίσεις Expression.\n"); correctExprs++; }
 	|program test             { printf("Test Function.\n"); correctExprs++; }
 	|program bind             { printf("Bind Function.\n"); correctExprs++; }
-	//|program printout         { printf("Print Function.\n"); correctExprs++; }
 	|program read             { printf("Read Function.\n"); correctExprs++; }
 	|program error	          { printf("Syntax error\n");  incorrectExprs++;}
 	|
@@ -44,43 +40,41 @@ deffacts:
 	LEFT_PAR DEFFACTS FACT_RULE_NAME fact_list RIGHT_PAR { correctExprs++; }
 	;
 
-//thewrw o,ti thereitai
-
 fact_list: 
-	LEFT_PAR elements RIGHT_PAR	{printf("\tΓεγονός\n");}
-	|fact_list LEFT_PAR  elements RIGHT_PAR {printf("\tΓεγονός\n");}
+	LEFT_PAR elements RIGHT_PAR              {printf("\tΓεγονός\n");}
+	|fact_list LEFT_PAR  elements RIGHT_PAR  {printf("\tΓεγονός\n");}
 	;
 
 
 elements: 
 	expr
 	|elements expr
-	|FACT_RULE_NAME
+	|FACT_RULE_NAME            { printf("\tΌνομα Ορισμού/Στοιχείο Γεγονότος\n"); }
 	|elements FACT_RULE_NAME
 	|STRING
 	|elements STRING
 	;
 	
 defrule: 
-	LEFT_PAR DEFRULE FACT_RULE_NAME fact_list test VELOS printout RIGHT_PAR{ correctExprs++; }
+	LEFT_PAR DEFRULE FACT_RULE_NAME fact_list test VELOS printout RIGHT_PAR{ correctExprs++; printf("\tΚανόνας\n"); }
 	;
 
 test: 
-	LEFT_PAR TEST equal RIGHT_PAR { correctExprs++; }
+	LEFT_PAR TEST equal RIGHT_PAR { correctExprs++; printf("\tΈλεγχος\n"); }
 	;
 
 printout: 
-	LEFT_PAR PRINTOUT fact_list RIGHT_PAR { correctExprs++; printf("Edw exei mia printut\n"); }
+	LEFT_PAR PRINTOUT fact_list RIGHT_PAR           { correctExprs++; printf("Edw exei mia printut\n"); }
 	|printout LEFT_PAR PRINTOUT fact_list RIGHT_PAR { correctExprs++; printf("kai Edw exei mia printut\n"); }
 	;
 
 mathoperation:
-	LEFT_PAR OPERATOR expr expr_list RIGHT_PAR   { correctExprs++; }
+	LEFT_PAR OPERATOR expr expr_list RIGHT_PAR   { correctExprs++; printf("\tΜαθηματική Έκφραση\n"); }
 	;
 
 expr:
-	INTCONST	  { correctExprs++; }
-	|VARIABLE	{ correctExprs++; }
+	INTCONST	     { correctExprs++; printf("\tΑκέραιος\n"); }
+	|VARIABLE	     { correctExprs++; printf("\tΜεταβλητή\n"); }
 	|mathoperation
 	;
 
@@ -90,45 +84,23 @@ expr_list:
 	;
 
 comparison:
-	LEFT_PAR ISON expr expr RIGHT_PAR   { correctExprs++; }
+	LEFT_PAR ISON expr expr RIGHT_PAR          { correctExprs++; printf("\tΣύγκριση\n"); }
 	;
 
 
 equal: 
-	LEFT_PAR ISON expr expr RIGHT_PAR
-	|equal LEFT_PAR ISON expr expr RIGHT_PAR
+	LEFT_PAR ISON expr expr RIGHT_PAR          { correctExprs++; printf("\tΣύγκριση\n"); }
+	|equal LEFT_PAR ISON expr expr RIGHT_PAR   { correctExprs++; printf("\tΣύγκριση\n"); }
 	;
 
-
-read: LEFT_PAR READ RIGHT_PAR { correctExprs++; }
+read: LEFT_PAR READ RIGHT_PAR { correctExprs++; printf("\tΑνάγνωση\n"); }
 ;
 
 bind: 
-	LEFT_PAR BIND VARIABLE expr RIGHT_PAR { correctExprs++; }
-	|LEFT_PAR BIND VARIABLE read RIGHT_PAR { correctExprs++; }
+	LEFT_PAR BIND VARIABLE expr RIGHT_PAR  { correctExprs++; printf("\tΑνάθεση τιμής\n"); }
+	|LEFT_PAR BIND VARIABLE read RIGHT_PAR { correctExprs++; printf("\tΑνάθεση τιμής\n"); }
 ;
 
-
-
-/*
-action: printout
-	|action printout
-	|test
-	|action test
-	|bind 
-	|action bind
-	|read
-	|action read
-	;
-
-printoutRecursion: LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
-	|printoutRecursion LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
-	|LEFT_PAR expr elements RIGHT_PAR
-	|printoutRecursion LEFT_PAR expr elements RIGHT_PAR
-	|expr
-	|printoutRecursion expr
-	;
-	*/
 %%
 
 //The function yyerror is responsible for finding the syntax errors. 
@@ -137,27 +109,16 @@ int yyerror(char  const*s) {
   printf("\nLine: %d FAILURE %s\n",line-1,s);
 }
 
-extern int yy_flex_debug; 
-
-//main function
 int main(int argc,char **argv){
-
-	//flex debugging
-	//yy_flex_debug = 1;
-	//yydebug = 1;
-
 
 	int parse = yyparse();
 
 	//checking if there were any syntax errors
 	if (incorrectExprs == 0 && incorrectWords == 0 && parse == 0){
-		
-		printf("\nINPUT FILE: PARSING SUCCEEDED.\n");
-		
-	}else{
-
+		printf("\nINPUT FILE: PARSING SUCCEEDED.\n");	
+	}
+	else{
 		printf("\nINPUT FILE: PARSING FAILED.\n");
-
 	}
 
 	//printing information about the correct words, expressions and incorrect words and expressions if they exist
