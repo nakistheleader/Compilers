@@ -46,6 +46,7 @@ ERROR           .
 {ISON}             { /*prn("ISON");*/return ISON; }
 {VELOS}            { /*prn("VELOS");*/ return VELOS; }
 {INTCONST}         { /*prn("INTCONST");*/  correctWords++; return INTCONST; }
+{FLOAT}			   {correctWords++; return FLOAT;}
 {VARIABLE}	       { /*prn("VARIABLE");*/  correctWords++; return VARIABLE; }
 {COMMENTS}         { /*prn("COMMENTS");*/ }
 {DEFFACTS}         { /*prn("DEFFACTS");*/  correctWords++; return DEFFACTS; }
@@ -57,7 +58,7 @@ ERROR           .
 {FACT_RULE_NAME}   { /*prn("FACT_RULE_NAME");*/  correctWords++; return FACT_RULE_NAME; }
 {STRING}		   { return STRING;}
 {ERROR}            { printf("\nWrong word definition at line: %d", line); incorrectWords++;}
-{NEWLINE}          { line++; printf("\n"); }
+{NEWLINE}          { line++; /*printf("\n");*/ }
 
 %%
 

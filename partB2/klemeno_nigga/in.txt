@@ -1,0 +1,51 @@
+(deffacts CUBES
+(color A is blue)
+(cube A on table)
+(color B is white)
+(cube B on A)
+(number_of_cubes 2) ) 
+
+(defrule move-up
+(cube A on ?something)
+(cube B on A)
+(number_of_cubes ?num)
+(test(= ?num 2))
+->
+(printout t (?something " is under A") ("A is under B") ("there are 2 cubes")) )
+
+
+(+ 1 ?sum)
+(- +3 -20 ?x1)
+(* ?id1 ?id2) 
+(/ 10 -2 1) 
+
+
+
+
+(= ?num 2) (= 100 (+ ?num 2)) (= (+ ?num 2) ?x)
+
+(test (= ?num 2))
+
+(bind ?x (read))
+(bind ?var 15)
+(bind ?x (+ 4 5))
+(bind ?x (* 4 100))
+
+(deffacts static-facts
+;;; food declarations
+(food-at 4 2)
+(food-at 5 2)
+)
+
+(deffacts dynamic-facts
+;;;pacman declaration
+(pacman-at 6 2)
+)
+
+(defrule move-UP 
+(pacman-at ?x ?y) 
+(food-at ?z ?y) 
+(test (= ?z (- ?x 1)))
+-> 
+;;; prints just a message 
+(printout t ("pacman has reached food")))

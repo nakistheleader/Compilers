@@ -18,8 +18,7 @@
 %}
 
 /* token definition */
-%token INTCONST VARIABLE OPERATOR ISON DEFRULE DEFFACTS TEST PRINTOUT READ BIND FACT_RULE_NAME LEFT_PAR RIGHT_PAR VELOS STRING
-
+%token INTCONST VARIABLE OPERATOR ISON DEFRULE DEFFACTS TEST PRINTOUT READ BIND FACT_RULE_NAME LEFT_PAR RIGHT_PAR VELOS STRING FLOAT
 
 %start program
 
@@ -29,15 +28,15 @@
 //Declaration of the rules and syntax
 
 program:
-	program deffacts         { printf("\nDeffacts Definition."); correctExprs++; }
-	|program defrule          { printf("\nDefrule Definition."); correctExprs++; }
-    |program mathoperation     { printf("\nMathimatic Expression."); }
-	|program comparison       { printf("\nΨιλοΚαταλαβες Expression."); correctExprs++; }
-	|program test             { printf("\nTest Function."); correctExprs++; }
-	|program bind             { printf("\nBind Function."); correctExprs++; }
-	|program printout         { printf("\nPrint Function."); correctExprs++; }
-	|program read             { printf("\nRead Function."); correctExprs++; }
-	|program error	          { printf("\nSyntax error");  incorrectExprs++;}
+	program deffacts         { printf("Βρέθηκε Ορισμός Γεγονότων Γραμμή %d\n",line); correctExprs++; }
+	|program defrule          { printf("Βρέθηκε Ορισμός Κανόνα.\n"); correctExprs++; }
+    |program mathoperation     { printf("Mathimatic Expression.\n"); }
+	|program comparison       { printf("ΨιλοΚαταλαβες Expression.\n"); correctExprs++; }
+	|program test             { printf("Test Function.\n"); correctExprs++; }
+	|program bind             { printf("Bind Function.\n"); correctExprs++; }
+	//|program printout         { printf("Print Function.\n"); correctExprs++; }
+	|program read             { printf("Read Function.\n"); correctExprs++; }
+	|program error	          { printf("Syntax error\n");  incorrectExprs++;}
 	|
 	;
 
@@ -45,18 +44,36 @@ deffacts:
 	LEFT_PAR DEFFACTS FACT_RULE_NAME fact_list RIGHT_PAR { correctExprs++; }
 	;
 
+//thewrw o,ti thereitai
+
 fact_list: 
-	LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
-	|fact_list LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
+	LEFT_PAR elements RIGHT_PAR	{printf("\tΓεγονός\n");}
+	|fact_list LEFT_PAR  elements RIGHT_PAR {printf("\tΓεγονός\n");}
 	;
+
 
 elements: 
 	expr
 	|elements expr
 	|FACT_RULE_NAME
 	|elements FACT_RULE_NAME
+	|STRING
+	|elements STRING
 	;
 	
+defrule: 
+	LEFT_PAR DEFRULE FACT_RULE_NAME fact_list test VELOS printout RIGHT_PAR{ correctExprs++; }
+	;
+
+test: 
+	LEFT_PAR TEST equal RIGHT_PAR { correctExprs++; }
+	;
+
+printout: 
+	LEFT_PAR PRINTOUT fact_list RIGHT_PAR { correctExprs++; printf("Edw exei mia printut\n"); }
+	|printout LEFT_PAR PRINTOUT fact_list RIGHT_PAR { correctExprs++; printf("kai Edw exei mia printut\n"); }
+	;
+
 mathoperation:
 	LEFT_PAR OPERATOR expr expr_list RIGHT_PAR   { correctExprs++; }
 	;
@@ -64,7 +81,7 @@ mathoperation:
 expr:
 	INTCONST	  { correctExprs++; }
 	|VARIABLE	{ correctExprs++; }
-	|LEFT_PAR OPERATOR expr expr_list RIGHT_PAR   { correctExprs++; }
+	|mathoperation
 	;
 
 expr_list: 
@@ -77,42 +94,23 @@ comparison:
 	;
 
 
-
-defrule: 
-	LEFT_PAR DEFRULE FACT_RULE_NAME defruleRecursion VELOS action RIGHT_PAR{ correctExprs++; }
-	;
-
-defruleRecursion: LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
-	|defruleRecursion LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
-	|test
-	|defruleRecursion test
-	;
-
-test: 
-	LEFT_PAR TEST equal RIGHT_PAR { correctExprs++; }
-	;
-
-equal: LEFT_PAR ISON expr expr RIGHT_PAR
+equal: 
+	LEFT_PAR ISON expr expr RIGHT_PAR
 	|equal LEFT_PAR ISON expr expr RIGHT_PAR
 	;
 
-printout: 
-	LEFT_PAR PRINTOUT printoutRecursion RIGHT_PAR { correctExprs++; }
-	;
 
-read: LEFT_PAR READ VARIABLE RIGHT_PAR { correctExprs++; }
+read: LEFT_PAR READ RIGHT_PAR { correctExprs++; }
 ;
 
-bind: LEFT_PAR BIND VARIABLE expr RIGHT_PAR { correctExprs++; }
+bind: 
+	LEFT_PAR BIND VARIABLE expr RIGHT_PAR { correctExprs++; }
+	|LEFT_PAR BIND VARIABLE read RIGHT_PAR { correctExprs++; }
 ;
 
 
 
-
-
-
-
-
+/*
 action: printout
 	|action printout
 	|test
@@ -130,6 +128,7 @@ printoutRecursion: LEFT_PAR FACT_RULE_NAME elements RIGHT_PAR
 	|expr
 	|printoutRecursion expr
 	;
+	*/
 %%
 
 //The function yyerror is responsible for finding the syntax errors. 

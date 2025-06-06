@@ -1,5 +1,5 @@
 all:
-	bison  -o klemeno_y.c klemeno.y -d
+	bison  -o klemeno_y.c klemeno.y -d -Wcounterexamples
 	flex -o klemeno_l.c klemeno.l
 	gcc -o bison_code klemeno_l.c klemeno_y.c -lfl -lm
 clean:
