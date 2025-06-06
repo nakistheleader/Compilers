@@ -12,7 +12,6 @@
 extern int line; //Line counter
 extern int correctWords; //Correct words counter
 extern int incorrectWords; //Incorrect Words counter
-void prn(char *s);
 
 %}
 
@@ -40,33 +39,24 @@ ERROR           .
 %%
 
 {DELIMITER}        { }
-{LEFT_PAR}         { /*prn("Left parenthesis");*/ return LEFT_PAR; }
-{RIGHT_PAR}        { /*prn("Right parenthesis");*/  return RIGHT_PAR; }
+{LEFT_PAR}         { return LEFT_PAR; }
+{RIGHT_PAR}        { return RIGHT_PAR; }
 {OPERATOR}         { return OPERATOR; }
-{ISON}             { /*prn("ISON");*/return ISON; }
-{VELOS}            { /*prn("VELOS");*/ return VELOS; }
-{INTCONST}         { /*prn("INTCONST");*/  correctWords++; return INTCONST; }
-{FLOAT}			   {correctWords++; return FLOAT;}
-{VARIABLE}	       { /*prn("VARIABLE");*/  correctWords++; return VARIABLE; }
-{COMMENTS}         { /*prn("COMMENTS");*/ }
-{DEFFACTS}         { /*prn("DEFFACTS");*/  correctWords++; return DEFFACTS; }
-{DEFRULE}          { /*prn("DEFRULE");*/  correctWords++; return DEFRULE; }
-{TEST}             { /*prn("TEST");*/  correctWords++; return TEST; }
-{PRINTOUT}         { /*prn("PRINT");*/  correctWords++; return PRINTOUT; }
-{READ}             { /*prn("READ");*/  correctWords++; return READ; }
-{BIND}             { /*prn("BIND");*/  correctWords++; return BIND; }
-{FACT_RULE_NAME}   { /*prn("FACT_RULE_NAME");*/  correctWords++; return FACT_RULE_NAME; }
-{STRING}		   { return STRING;}
-{ERROR}            { printf("\nWrong word definition at line: %d", line); incorrectWords++;}
-{NEWLINE}          { line++; /*printf("\n");*/ }
+{ISON}             { return ISON; }
+{VELOS}            { return VELOS; }
+{INTCONST}         { correctWords++; return INTCONST; }
+{FLOAT}			   { correctWords++; return FLOAT;}
+{VARIABLE}	       { correctWords++; return VARIABLE; }
+{COMMENTS}         { }
+{DEFFACTS}         { correctWords++; return DEFFACTS; }
+{DEFRULE}          { correctWords++; return DEFRULE; }
+{TEST}             { correctWords++; return TEST; }
+{PRINTOUT}         { correctWords++; return PRINTOUT; }
+{READ}             { correctWords++; return READ; }
+{BIND}             { correctWords++; return BIND; }
+{FACT_RULE_NAME}   { correctWords++; return FACT_RULE_NAME; }
+{STRING}		   { correctWords++; return STRING;}
+{ERROR}            { printf("\nΛάθος στην γραμμή: %d\n", line); incorrectWords++;}
+{NEWLINE}          { line++; }
 
 %%
-
-
-void prn(char *s)
-{
-	printf("\n\t%s: %s ", s, yytext);
-	return;
-}
-
-
