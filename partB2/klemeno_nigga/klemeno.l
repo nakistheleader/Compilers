@@ -1,4 +1,5 @@
 %option noyywrap
+%x error
 
 %{
 
@@ -41,9 +42,9 @@ ERROR           .
 {DELIMITER}        { }
 {LEFT_PAR}         { return LEFT_PAR; }
 {RIGHT_PAR}        { return RIGHT_PAR; }
-{OPERATOR}         { return OPERATOR; }
-{ISON}             { return ISON; }
-{VELOS}            { return VELOS; }
+{OPERATOR}         { correctWords++; return OPERATOR; }
+{ISON}             { correctWords++; return ISON; }
+{VELOS}            { correctWords++; return VELOS; }
 {INTCONST}         { correctWords++; return INTCONST; }
 {FLOAT}			   { correctWords++; return FLOAT;}
 {VARIABLE}	       { correctWords++; return VARIABLE; }
@@ -56,7 +57,10 @@ ERROR           .
 {BIND}             { correctWords++; return BIND; }
 {FACT_RULE_NAME}   { correctWords++; return FACT_RULE_NAME; }
 {STRING}		   { correctWords++; return STRING;}
-{ERROR}            { printf("\nΛάθος στην γραμμή: %d\n", line); incorrectWords++;}
+{ERROR}            { printf("\nΛάθος στην γραμμή: %d\n", line); BEGIN(error); incorrectWords++;}
 {NEWLINE}          { line++; }
 
+<error>[ \t\n]  { BEGIN(0); }
+<error>.        {}
 %%
+
