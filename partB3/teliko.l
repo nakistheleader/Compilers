@@ -41,9 +41,9 @@ ISON_WARN       ==
 DEFFACTS_WARN   "defacts"|"deffact"|"defact"
 DEFRULE_WARN    "derule"|"defrul"|"derulo"
 TEST_WARN       "tst"|"ttest"|"testt"
-PRINTOUT_WARN   "printoutt"|"printout"|"prntout"
+PRINTOUT_WARN   "printoutt"|"printout"|"prntout"|"prntout t"
 READ_WARN       "readd"|"red"|"resd"
-BIND_WARN       "bindd"|"bbind"|"bnd"
+BIND_WARN       "bindd"|"bbind"|"bnd"|"bbnd"
 VELOS_WARN      "-->"|">"|"- >"
 
 %%
