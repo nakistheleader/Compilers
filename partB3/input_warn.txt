@@ -1,0 +1,68 @@
+;; ISON_WARN (== instead of =)
+(test (== 2 2))   ;; ISON_WARN
+
+;; DEFFACTS_WARN
+(defacts my_facts
+    (object a)
+)
+
+(deffact my_facts2
+    (object b)
+)
+
+(defact my_facts3
+    (object c)
+)
+
+;; DEFRULE_WARN
+(derule move_left
+    (position ?x ?y)
+    (tst (== ?x 5))  ;; TEST_WARN + ISON_WARN
+    -->
+    (prntout t ("Moving left"))  ;; PRINTOUT_WARN
+)
+
+(defrul move_right
+    (position ?x ?y)
+    (ttest (= ?y 3))  ;; TEST_WARN
+    -->
+    (printoutt ("Moving right"))  ;; PRINTOUT_WARN
+)
+
+(derulo move_down
+    (position ?x ?y)
+    (testt (= ?y 0))  ;; TEST_WARN
+    -->    ;; VELOS_WARN
+    (printout t ("Moving down"))  ;; PRINTOUT_WARN (the correct but also in the warn list!)
+)
+
+;; READ_WARN
+(bindd ?input1 (readd))  ;; BIND_WARN + READ_WARN
+(bindd ?input2 (red))    ;; BIND_WARN + READ_WARN
+(bindd ?input3 (resd))   ;; BIND_WARN + READ_WARN
+
+;; BIND_WARN (remaining variations)
+(bbnd ?counter 0)
+(bnd ?value (+ 2 3))
+
+;; VELOS_WARN (all variants)
+(defrule move_up
+    (position ?x ?y)
+    (test (= ?x 1))
+    -->
+    (printout t ("Using -->"))  ;; VELOS_WARN
+)
+
+(defrule move_diag
+    (position ?x ?y)
+    (test (= ?y 1))
+    >    ;; VELOS_WARN
+    (printout t ("Using >"))
+)
+
+(defrule move_random
+    (position ?x ?y)
+    (test (= ?x ?y))
+    - >    ;; VELOS_WARN
+    (printout t ("Using - >"))
+)

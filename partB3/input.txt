@@ -1,0 +1,85 @@
+;;ορισμός των γεγονότων του προβλήματος
+(deffacts static-facts
+ ;;; food declarations
+ (food-at 4 2)
+ (food-at 5 2))
+
+;;κανόνας όπου ο χαρακτήρας κινείται βόρεια 
+;;μόνο αν υπάρχει τροφή εκεί 
+(defrule move_UP 
+(pacman_at ?x ?y)
+(food_at ?z ?y) 
+(test (= ?z (- ?x 1)))
+->
+;;; prints just a message 
+(printout t ("pacman has reached food"))) 
+
+(defrule move-up
+(cube A on ?something)
+(cube B on A)
+(number_of_cubes ?num)
+(test(= ?num 2))
+->
+(printout t (?something " is under A") ("A is under B") ("there are 2 cubes")) )
+
+(defrule basic 
+(initial_fact)
+(test (= 2 2))
+-> 
+(printout t ("Hello, world!") ) )
+
+(defrule check_count
+    (number_of_cubes ?num)
+    (test (= ?num 1))
+    ->
+    (printout t ("There are more than 1 cubes"))
+)
+
+(deffacts robot_world
+    (robot_position x 5 y 10)
+    (battery_level 85)
+    (obstacle front no)
+    (obstacle left yes)
+    (obstacle right no)
+)
+
+(defrule move_forward
+    (robot_position x ?x y ?y)
+    (battery_level ?level)
+    (test (= ?level 50))
+    ->
+    (printout t ("Moving robot forward"))
+)
+(defrule energy_check
+    (battery_level ?b)
+    (test (= ?b 80))
+    ->
+    (printout t ("Battery is between 20 and 80"))
+)
+(defrule greet_user
+(user_name ?name)
+(test (= ?name 2))
+ ->
+(printout t ("Hello, " ?name "!"))
+)
+
+(test (= 2 2) )
+(test (= ?num 2)) 
+(test (= ?x 100))
+(test (= ?level 50))
+(test (= ?battery 80))
+(test (= (+ 1 1) 2))
+(test (= (* ?a 2) ?b))
+(test (= (- ?value 10) 0))
+(test (= (/ ?total ?count) 5))
+(test (= (* ?a 2) 5))
+(bind ?x (read))
+(bind ?var 15)
+(bind ?x (+ 4 5))
+(bind ?x (* 4 100))
+(bind ?a(+ 23 15))
+(bind ?cold (- 10 10))
+(bind ?counter 0)
+(bind ?sum (+ ?a ?b ?c))
+(bind ?result (/ 100 4))
+(bind ?area (* ?width ?height))
