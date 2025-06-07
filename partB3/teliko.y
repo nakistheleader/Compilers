@@ -2,13 +2,14 @@
 
 	#include <stdio.h>
 	#include <stdlib.h>
-	#include <string.h>
+
 	int line = 1;
 	int correctWords = 0;
 	int wrongWords = 0;
 	int wrongExpressions = 0;
 	int correctExpressions = 0;
 	int warnings = 0;
+	
 	int yylex();
 	int yyerror(const char *s);
 	
@@ -100,7 +101,7 @@ bind:
 %%
 
 int yyerror(char  const *s) {
-	printf("Error: Γραμμή %d \n",line,s);
+	printf("Error: Συντακτικό λάθος στη γραμμή %d \n",line,s);
 }
 
 int main(int argc,char **argv){
