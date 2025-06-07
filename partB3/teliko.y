@@ -7,10 +7,10 @@
 	int correctWords = 0;
 	int wrongWords = 0;
 	int wrongExpressions = 0;
-	int correctExpressions = 0; //Counts correct statements
+	int correctExpressions = 0;
 	int warnings = 0;
 	int yylex();
-	int yyerror(const char *s); //changed the function to accept char pointer to avoid warnings during compiling 
+	int yyerror(const char *s);
 	
 %}
 
