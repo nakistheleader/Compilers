@@ -68,6 +68,7 @@
 )
 
 (printout t ("Hello"))
+(bindd ?input3 (resd))
 (+ 1 1)
 
 {@@#}
