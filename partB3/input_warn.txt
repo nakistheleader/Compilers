@@ -66,3 +66,8 @@
     - >    ;; VELOS_WARN
     (printout t ("Using - >"))
 )
+
+(printout t ("Hello"))
+(+ 1 1)
+
+{@@#}
